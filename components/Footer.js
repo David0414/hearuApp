@@ -23,7 +23,7 @@ const FooterComponent = () => {
         navigation.navigate("Feed"); // Cambiado de "Likes" a "Feed"
         break;
       case "user":
-        navigation.navigate("Profile");
+        navigation.navigate('ProfileScreen');
         break;
 
       case "logOut":

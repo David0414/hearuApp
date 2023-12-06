@@ -13,6 +13,9 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BASE_URL } from '../api/client';
 
+import FastImage from 'react-native-fast-image';
+
+
 const SearchScreen = ({ navigation }) => {
     const [searchText, setSearchText] = useState('');
     const [searchResults, setSearchResults] = useState([]);
@@ -50,21 +53,49 @@ const SearchScreen = ({ navigation }) => {
         }
     };
 
-    const getItemTitle = (item) => {
+    const getItemDetails = (item) => {
+        let title = '';
+        let subtitle = '';
+        let description = '';
+        let photo = '';
+
         switch (item.descripcion) {
-          case 'cancion':
-            return item.nombre;
-          case 'autor':
-            return item.nombre;
-          case 'album':
-            return item.nombre;
-          case 'usuario':
-            return item.nombre;
-          default:
-            return '';
+            case 'cancion':
+                title = item.nombre;
+                subtitle = 'Canción';
+                description = `Artista: ${item.autor}`;
+                photo = { uri: `asset:/imgs/cover/${encodeURIComponent(item.foto)}` };
+                break;
+            case 'autor':
+                title = item.nombre;
+                subtitle = 'Artista';
+                description = 'Autor';
+                photo = { uri: `asset:/imgs/artist/${encodeURIComponent(item.foto)}` };
+                break;
+            case 'album':
+                title = item.nombre;
+                subtitle = 'Álbum';
+                description = `Artista: ${item.autor}`;
+                photo = { uri: `asset:/imgs/cover/${encodeURIComponent(item.foto)}` };
+                break;
+            case 'usuario':
+                title = item.nombre;
+                subtitle = 'Usuario';
+                description = `Likes: ${item.likeness}`;
+                photo = { uri: `asset:/imgs/profilePic/${encodeURIComponent(item.foto)}` };
+                break;
+            default:
+                break;
         }
-      };
-      
+
+        return {
+            title,
+            subtitle,
+            description,
+            photo,
+        };
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.searchContainer}>
@@ -84,10 +115,22 @@ const SearchScreen = ({ navigation }) => {
                     <TouchableOpacity
                         onPress={() => {
                             console.log('Click on result:', item);
+                            console.log(getItemDetails(item).photo);
+
+                            navigation.navigate('SongScreen', { idCancion: item.id });
+
                         }}
                         style={styles.searchResultItem}
                     >
-                        <Text style={styles.searchResultText}>{decodeURIComponent(getItemTitle(item))}</Text>
+                        <Text style={styles.searchResultText}>{decodeURIComponent(getItemDetails(item).title)}</Text>
+                        <Text style={styles.searchResultSubtitle}>{getItemDetails(item).subtitle}</Text>
+                        <Text style={styles.searchResultDescription}>{getItemDetails(item).description}</Text>
+                        {getItemDetails(item).photo && (
+                            <FastImage
+                                source={getItemDetails(item).photo}
+                                style={styles.searchResultPhoto}
+                            />
+                        )}
                     </TouchableOpacity>
                 )}
             />
