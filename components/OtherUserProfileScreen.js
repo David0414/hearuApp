@@ -9,32 +9,31 @@ const OtherUserProfileScreen = ({ route, navigation }) => {
   const { userName } = route.params || {};
   const [profileData, setProfileData] = useState(null);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [refreshPage, setRefreshPage] = useState(false);
 
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
         const token = await AsyncStorage.getItem('token');
+
+        // Verificar si el usuario actual sigue al perfil
+        const storedIsFollowing = await AsyncStorage.getItem('isFollowing');
+        setIsFollowing(storedIsFollowing === 'true');
+
         const response = await axios.get(`${BASE_URL}/profile/${userName}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         setProfileData(response.data.message);
-
-        // Verificar si el usuario actual sigue al perfil
-        const onfollowResponse = await axios.get(`${BASE_URL}/profile/${userName}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setIsFollowing(onfollowResponse.data.message.onfollow === 1);
       } catch (error) {
         console.error('Error fetching profile data:', error);
       }
     };
 
     fetchProfileData();
-  }, [userName]);
+  }, [userName, refreshPage]);
+
 
   const handleFollowButton = async () => {
     try {
@@ -59,17 +58,24 @@ const OtherUserProfileScreen = ({ route, navigation }) => {
         });
       }
 
+      // Almacenar la información de seguimiento localmente
+      await AsyncStorage.setItem('isFollowing', JSON.stringify(!isFollowing));
+
       // Verificar si el usuario actual sigue al perfil después de la actualización
       const onfollowResponse = await axios.get(`${BASE_URL}/profile/${userName}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      setIsFollowing(onfollowResponse.data.message.onfollow);
+      setIsFollowing(onfollowResponse.data.message.onfollow === 1);
+
+      // Actualizar la bandera de actualización para forzar el nuevo renderizado
+      setRefreshPage((prevRefresh) => !prevRefresh);
     } catch (error) {
       console.error('Error toggling follow status:', error);
     }
   };
+
 
   return (
     <View style={styles.container}>
