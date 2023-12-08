@@ -8,9 +8,11 @@ import HomeScreen from './components/HomeScreeen';
 import RegisterScreen from './components/RegisterScreen';
 import RatingScreen from './components/RatingScreen';
 import SearchScreen from './components/SearchScreen';
-
-
 import ProfileScreen from './components/ProfileScreen';
+import OtherUserProfileScreen from './components/OtherUserProfileScreen';
+
+
+import UpdatePhotoProfileScreen from './components/UpdatePhotoProfileScreen';
 import SongScreen from './components/SongScreen';
 
 const Stack = createStackNavigator();
@@ -25,7 +27,11 @@ const App = () => {
         <Stack.Screen name="RatingScreen" component={RatingScreen} />
         <Stack.Screen name="SearchScreen" component={SearchScreen} />
         <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+        <Stack.Screen name="OtherUserProfileScreen" component={OtherUserProfileScreen} />
+
         <Stack.Screen name="SongScreen" component={SongScreen} />
+        <Stack.Screen name="UpdatePhotoProfileScreen" component={UpdatePhotoProfileScreen} />
+
 
 
 

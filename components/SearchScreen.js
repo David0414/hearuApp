@@ -20,11 +20,17 @@ const SearchScreen = ({ navigation }) => {
     const [searchText, setSearchText] = useState('');
     const [searchResults, setSearchResults] = useState([]);
 
+
+
     useEffect(() => {
         console.log('Search Results:', searchResults);
 
-        // Puedes realizar acciones adicionales al cargar la pantalla, si es necesario
+
     }, []);
+
+
+
+    
 
     const handleSearch = async (text) => {
         try {
@@ -117,7 +123,11 @@ const SearchScreen = ({ navigation }) => {
                             console.log('Click on result:', item);
                             console.log(getItemDetails(item).photo);
 
-                            navigation.navigate('SongScreen', { idCancion: item.id });
+                            //navigation.navigate('SongScreen', { idCancion: item.id });
+                            navigation.navigate('OtherUserProfileScreen', {
+                                userName: item.nombre
+                            });
+                            
 
                         }}
                         style={styles.searchResultItem}

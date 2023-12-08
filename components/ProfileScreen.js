@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from "@react-navigation/native";
+import { AirbnbRating } from 'react-native-ratings';
 
 
 import { BASE_URL } from '../api/client';
@@ -10,25 +12,53 @@ const ProfileScreen = ({ route, navigation }) => {
   const { userName } = route.params || {};
   const [profileData, setProfileData] = useState(null);
 
+
+
+
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
         const token = await AsyncStorage.getItem('token');
         const storedUserName = await AsyncStorage.getItem('nombreUsuario');
-  
+
         const response = await axios.get(`${BASE_URL}/profile/${storedUserName}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setProfileData(response.data.message);
+
+
+
+
+
+
+
       } catch (error) {
         console.error('Error fetching profile data:', error);
       }
     };
-  
+
     fetchProfileData();
   }, []);
-  
 
+
+
+
+
+  const handleUpdatePhotoPress = () => {
+    navigation.navigate('UpdatePhotoProfileScreen');
+  };
+
+  const renderUpdatePhotoButton = () => {
+    if (isOwnProfile) {
+      return (
+        <TouchableOpacity onPress={handleUpdatePhotoPress} style={styles.updatePhotoButton}>
+          <Text style={styles.updatePhotoButtonText}>Actualizar Foto</Text>
+        </TouchableOpacity>
+      );
+    }
+
+    return null;
+  };
 
   if (!profileData) {
     return (
@@ -60,24 +90,35 @@ const ProfileScreen = ({ route, navigation }) => {
         <FlatList
           data={profileData.rates}
           keyExtractor={(item) => item.idPublicacion.toString()}
-          renderItem={({ item }) => (
-            <View style={styles.rateItem}>
-              <Text>Canción: {item.nombreCancion}</Text>
-              <Text>Autor: {item.nombreAutor}</Text>
-              <Text>Calificación: {item.rate}</Text>
+          renderItem={({ item, index }) => (
+            <View style={[styles.rateItem, { backgroundColor: 'red' }]}>
+              <Text style={{ color: 'white' }}>Canción: {item.nombreCancion}</Text>
+              <Text style={{ color: 'white' }}>Autor: {item.nombreAutor}</Text>
+              <Image
+                source={{ uri: `asset:/imgs/cover/${item.portadaAlbum}` }}
+                style={styles.profileImage}
+              />
+
+
+              {/* Representación de la calificación con AirbnbRating */}
+              <AirbnbRating
+                count={5}
+                reviews={['Terrible', 'Malo', 'Regular', 'Bueno', 'Excelente']}
+                defaultRating={item.rate}
+                size={20}
+                showRating={false}
+                isDisabled
+              />
+
             </View>
           )}
         />
 
-        {profileData.onfollow[0].onfollow === 0 ? (
-          <TouchableOpacity style={styles.followButton} onPress={() => handleFollow()}>
-            <Text style={styles.followButtonText}>Seguir</Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity style={styles.unfollowButton} onPress={() => handleUnfollow()}>
-            <Text style={styles.unfollowButtonText}>Dejar de seguir</Text>
-          </TouchableOpacity>
-        )}
+        {/* Actualizar Foto Button */}
+        {/*onPress={handleUpdatePhotoPress}*/}
+        <TouchableOpacity style={styles.updatePhotoButton} >
+          <Text style={styles.updatePhotoButtonText}>Actualizar Foto</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
