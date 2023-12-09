@@ -17,14 +17,18 @@ const OtherUserProfileScreen = ({ route, navigation }) => {
         const token = await AsyncStorage.getItem('token');
 
         // Verificar si el usuario actual sigue al perfil
-        const storedIsFollowing = await AsyncStorage.getItem('isFollowing');
-        setIsFollowing(storedIsFollowing === 'true');
-
         const response = await axios.get(`${BASE_URL}/profile/${userName}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
+
+        const onfollowValue = response.data.message.onfollow[0].onfollow;
+        setIsFollowing(onfollowValue === 1);
+
+        // Almacenar la información de seguimiento localmente
+        await AsyncStorage.setItem('isFollowing', JSON.stringify(onfollowValue === 1));
+
         setProfileData(response.data.message);
       } catch (error) {
         console.error('Error fetching profile data:', error);
@@ -34,32 +38,30 @@ const OtherUserProfileScreen = ({ route, navigation }) => {
     fetchProfileData();
   }, [userName, refreshPage]);
 
-
   const handleFollowButton = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
 
       // Realiza la acción de seguir/dejar de seguir directamente en el cliente
-      setIsFollowing((prevIsFollowing) => !prevIsFollowing);
+      const newIsFollowing = !isFollowing;
+      setIsFollowing(newIsFollowing);
 
-      if (isFollowing) {
-        // Dejar de seguir
-        await axios.delete(`${BASE_URL}/profile/${userName}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-      } else {
+      // Actualizar el servidor con la acción de seguir/dejar de seguir
+      if (newIsFollowing) {
         // Seguir
         await axios.post(`${BASE_URL}/profile/${userName}`, null, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
+      } else {
+        // Dejar de seguir
+        await axios.delete(`${BASE_URL}/profile/${userName}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
       }
-
-      // Almacenar la información de seguimiento localmente
-      await AsyncStorage.setItem('isFollowing', JSON.stringify(!isFollowing));
 
       // Verificar si el usuario actual sigue al perfil después de la actualización
       const onfollowResponse = await axios.get(`${BASE_URL}/profile/${userName}`, {
@@ -67,7 +69,14 @@ const OtherUserProfileScreen = ({ route, navigation }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setIsFollowing(onfollowResponse.data.message.onfollow === 1);
+
+      const onfollowValue = onfollowResponse.data.message.onfollow[0].onfollow;
+
+      // Actualizar el estado isFollowing con el valor directo de onfollow
+      setIsFollowing(onfollowValue === 1);
+
+      // Almacenar la información de seguimiento localmente
+      await AsyncStorage.setItem('isFollowing', JSON.stringify(onfollowValue === 1));
 
       // Actualizar la bandera de actualización para forzar el nuevo renderizado
       setRefreshPage((prevRefresh) => !prevRefresh);

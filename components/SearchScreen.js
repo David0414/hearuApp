@@ -30,7 +30,7 @@ const SearchScreen = ({ navigation }) => {
 
 
 
-    
+
 
     const handleSearch = async (text) => {
         try {
@@ -123,11 +123,14 @@ const SearchScreen = ({ navigation }) => {
                             console.log('Click on result:', item);
                             console.log(getItemDetails(item).photo);
 
-                            //navigation.navigate('SongScreen', { idCancion: item.id });
-                            navigation.navigate('OtherUserProfileScreen', {
-                                userName: item.nombre
-                            });
-                            
+                            if (item.descripcion === 'cancion') {
+                                // Navegar a la pantalla de SongScreen
+                                navigation.navigate('SongScreen', { idCancion: item.id });
+                            } else if (item.descripcion === 'usuario') {
+                                // Navegar a la pantalla de OtherUserProfileScreen
+                                navigation.navigate('OtherUserProfileScreen', { userName: item.nombre });
+                            }
+
 
                         }}
                         style={styles.searchResultItem}
