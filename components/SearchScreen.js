@@ -72,12 +72,7 @@ const SearchScreen = ({ navigation }) => {
                 description = `Artista: ${item.autor}`;
                 photo = { uri: `asset:/imgs/cover/${encodeURIComponent(item.foto)}` };
                 break;
-            case 'autor':
-                title = item.nombre;
-                subtitle = 'Artista';
-                description = 'Autor';
-                photo = { uri: `asset:/imgs/artist/${encodeURIComponent(item.foto)}` };
-                break;
+
             case 'album':
                 title = item.nombre;
                 subtitle = 'Álbum';
@@ -87,10 +82,18 @@ const SearchScreen = ({ navigation }) => {
             case 'usuario':
                 title = item.nombre;
                 subtitle = 'Usuario';
-                description = `Likes: ${item.likeness}`;
+                description = `Seguidores: ${item.likeness}`;
                 photo = { uri: `asset:/imgs/profilePic/${encodeURIComponent(item.foto)}` };
                 break;
             default:
+
+                // Manejar el caso de 'artista' específicamente
+                if (item.descripcion === 'artista') {
+                    title = item.nombre;
+                    subtitle = 'Artista';
+                    description = ''; // Puedes agregar más detalles si es necesario
+                    photo = { uri: `asset:/imgs/artist/${encodeURIComponent(item.foto)}` };
+                }
                 break;
         }
 
@@ -107,11 +110,10 @@ const SearchScreen = ({ navigation }) => {
             <View style={styles.searchContainer}>
                 <TextInput
                     style={styles.searchInput}
-                    placeholder="Search..."
+                    placeholder="Busca canciones, usuarios, artistas ó álbumes"
                     onChangeText={handleSearch} // Llama a la función de búsqueda en cada cambio de texto
                     value={searchText}
                 />
-                <Button title="Search" onPress={handleSearch} />
             </View>
 
             <FlatList
@@ -129,6 +131,11 @@ const SearchScreen = ({ navigation }) => {
                             } else if (item.descripcion === 'usuario') {
                                 // Navegar a la pantalla de OtherUserProfileScreen
                                 navigation.navigate('OtherUserProfileScreen', { userName: item.nombre });
+                            }
+
+                            else if (item.descripcion == 'artista') {
+                                //Navegar a ArtistScreen
+                                navigation.navigate('ArtistScreen', { idAutor: item.id });
                             }
 
 
@@ -157,6 +164,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#333',
         padding: 20,
+    },
+
+    boton: {
+        backgroundColor: '#E53C3C',
+
     },
     searchContainer: {
         flexDirection: 'row',

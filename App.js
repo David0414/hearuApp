@@ -11,7 +11,7 @@ import SearchScreen from './components/SearchScreen';
 import ProfileScreen from './components/ProfileScreen';
 import OtherUserProfileScreen from './components/OtherUserProfileScreen';
 
-
+import ArtistScreen from './components/ArtistScreen';
 import UpdatePhotoProfileScreen from './components/UpdatePhotoProfileScreen';
 import SongScreen from './components/SongScreen';
 
@@ -28,6 +28,9 @@ const App = () => {
         <Stack.Screen name="SearchScreen" component={SearchScreen} />
         <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
         <Stack.Screen name="OtherUserProfileScreen" component={OtherUserProfileScreen} />
+
+        <Stack.Screen name="ArtistScreen" component={ArtistScreen} />
+
 
         <Stack.Screen name="SongScreen" component={SongScreen} />
         <Stack.Screen name="UpdatePhotoProfileScreen" component={UpdatePhotoProfileScreen} />

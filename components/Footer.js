@@ -1,6 +1,6 @@
 // FooterComponent.js
 import React, { useState } from "react";
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import { View, TouchableOpacity, Text, StyleSheet, Image } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 
@@ -39,77 +39,90 @@ const FooterComponent = () => {
   return (
     <View style={styles.footer}>
       <View style={styles.container}>
-      {/* Icono de Home */}
-      <TouchableOpacity
-        style={[
-          styles.iconContainer,
-          selectedIcon === "home" && styles.selectedIcon,
-        ]}
-        onPress={() => handleIconPress("home")}
-      >
-        <FontAwesome name="home" size={24} color="black" />
-        <Text style={styles.iconText}>Home</Text>
-      </TouchableOpacity>
+        {/* Icono de Home */}
+        <TouchableOpacity
+          style={[
+            styles.iconContainer,
+            selectedIcon === "home" && styles.selectedIcon,
+          ]}
+          onPress={() => handleIconPress("home")}
+        >
+          <Image
+            source={require('../assets/icons/hogar.png')} // Ruta de la imagen PNG
+            style={styles.iconImage}
+          />
+          <Text style={styles.iconText}>Home</Text>
+        </TouchableOpacity>
 
-      {/* Icono de Buscar */}
-      <TouchableOpacity
-        style={[
-          styles.iconContainer,
-          selectedIcon === "search" && styles.selectedIcon,
-        ]}
-        onPress={() => handleIconPress("search")}
-      >
-        <FontAwesome name="search" size={24} color="black" />
-        <Text style={styles.iconText}>Buscar</Text>
-      </TouchableOpacity>
+        {/* Icono de Buscar */}
+        <TouchableOpacity
+          style={[
+            styles.iconContainer,
+            selectedIcon === "search" && styles.selectedIcon,
+          ]}
+          onPress={() => handleIconPress("search")}
+        >
+          <Image
+            source={require('../assets/icons/lupa.png')} // Ruta de la imagen PNG
+            style={styles.iconImage}
+          />
+          <Text style={styles.iconText}>Buscar</Text>
+        </TouchableOpacity>
 
-      {/* Icono de Feed (anteriormente Likes) */}
-      <TouchableOpacity
-        style={[
-          styles.iconContainer,
-          selectedIcon === "heart" && styles.selectedIcon,
-        ]}
-        onPress={() => handleIconPress("heart")}
-      >
-        <View>
-          <FontAwesome name="feed" size={24} color="black" />
-          {/* Cambiado el icono a "feed" */}
-          <Text style={styles.iconText}>Feed</Text>
-          {/* Cambiado el texto a "Feed" */}
-        </View>
-      </TouchableOpacity>
+        {/* Icono de Feed */}
+        <TouchableOpacity
+          style={[
+            styles.iconContainer,
+            selectedIcon === "heart" && styles.selectedIcon,
+          ]}
+          onPress={() => handleIconPress("heart")}
+        >
+          <View>
+            <Image
+              source={require('../assets/icons/hogar.png')} // Ruta de la imagen PNG
+              style={styles.iconImage}
+            />
+            <Text style={styles.iconText}>Feed</Text>
+          </View>
+        </TouchableOpacity>
 
-      {/* Icono de Perfil */}
-      <TouchableOpacity
-        style={[
-          styles.iconContainer,
-          selectedIcon === "user" && styles.selectedIcon,
-        ]}
-        onPress={() => handleIconPress("user")}
-      >
-        <FontAwesome name="user" size={24} color="black" />
-        <Text style={styles.iconText}>Perfil</Text>
-      </TouchableOpacity>
+        {/* Icono de Perfil */}
+        <TouchableOpacity
+          style={[
+            styles.iconContainer,
+            selectedIcon === "user" && styles.selectedIcon,
+          ]}
+          onPress={() => handleIconPress("user")}
+        >
+          <Image
+            source={require('../assets/icons/usuario-de-perfil.png')} // Ruta de la imagen PNG
+            style={styles.iconImage}
+          />
+          <Text style={styles.iconText}>Perfil</Text>
+        </TouchableOpacity>
 
 
-      {/*Icono de Log out*/}
-      
-      <TouchableOpacity
-        style={[
-          styles.iconContainer,
-          selectedIcon === "logOut" && styles.selectedIcon,
-        ]}
-        onPress={() => handleIconPress("logOut")}
-      >
-        <FontAwesome name="logOut" size={24} color="black" />
-        <Text style={styles.iconText}>Log Out</Text>
-      </TouchableOpacity>
+        {/*Icono de Log out*/}
 
+        <TouchableOpacity
+          style={[
+            styles.iconContainer,
+            selectedIcon === "logOut" && styles.selectedIcon,
+          ]}
+          onPress={() => handleIconPress("logOut")}
+        >
+          <Image
+            source={require('../assets/icons/cerrar-sesion.png')} // Ruta de la imagen PNG
+            style={styles.iconImage}
+          />
+          <Text style={styles.iconText}>Log Out</Text>
+        </TouchableOpacity>
+
+
+      </View>
 
     </View>
 
-    </View>
-    
   );
 };
 
@@ -129,6 +142,12 @@ const styles = StyleSheet.create({
   iconContainer: {
     alignItems: "center",
   },
+
+  iconImage: {
+    width: 24, // ajusta el ancho según tus necesidades
+    height: 24, // ajusta la altura según tus necesidades
+  },
+
   iconText: {
     marginTop: 5,
     color: "black",
@@ -154,7 +173,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 
-  
+
 });
 
 export default FooterComponent;
