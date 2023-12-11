@@ -12,6 +12,7 @@ import {
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BASE_URL } from '../api/client';
+import FooterComponent from './Footer';
 
 import FastImage from 'react-native-fast-image';
 
@@ -159,6 +160,7 @@ const SearchScreen = ({ navigation }) => {
                     </TouchableOpacity>
                 )}
             />
+            <FooterComponent />
 
         </View>
     );

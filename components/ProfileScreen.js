@@ -4,16 +4,13 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from "@react-navigation/native";
 import { AirbnbRating } from 'react-native-ratings';
-
+import FooterComponent from './Footer';
 
 import { BASE_URL } from '../api/client';
 
 const ProfileScreen = ({ route, navigation }) => {
   const { userName } = route.params || {};
   const [profileData, setProfileData] = useState(null);
-
-
-
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -25,13 +22,6 @@ const ProfileScreen = ({ route, navigation }) => {
           headers: { Authorization: `Bearer ${token}` },
         });
         setProfileData(response.data.message);
-
-
-
-
-
-
-
       } catch (error) {
         console.error('Error fetching profile data:', error);
       }
@@ -40,15 +30,9 @@ const ProfileScreen = ({ route, navigation }) => {
     fetchProfileData();
   }, []);
 
-
-
-
-
   const handleUpdatePhotoPress = () => {
     navigation.navigate('UpdatePhotoProfileScreen');
   };
-
-
 
   if (!profileData) {
     return (
@@ -84,17 +68,16 @@ const ProfileScreen = ({ route, navigation }) => {
         <FlatList
           data={profileData.rates}
           keyExtractor={(item) => item.idPublicacion.toString()}
+          style={{ marginBottom: 55 }} // Ajusta el valor según sea necesario
+
           renderItem={({ item, index }) => (
-            <View style={[styles.rateItem, { backgroundColor: 'red' }]}>
+            <View style={[styles.rateItem, { backgroundColor: '#E53C3C' }]}>
               <Text style={{ color: 'white' }}>Canción: {item.nombreCancion}</Text>
               <Text style={{ color: 'white' }}>Autor: {item.nombreAutor}</Text>
               <Image
                 source={{ uri: `asset:/imgs/cover/${item.portadaAlbum}` }}
-                style={styles.profileImage}
+                style={styles.albumCover}
               />
-
-
-              {/* Representación de la calificación con AirbnbRating */}
               <AirbnbRating
                 count={5}
                 reviews={['Terrible', 'Malo', 'Regular', 'Bueno', 'Excelente']}
@@ -103,17 +86,18 @@ const ProfileScreen = ({ route, navigation }) => {
                 showRating={false}
                 isDisabled
               />
-
             </View>
           )}
         />
 
         {/* Actualizar Foto Button */}
-        {/*onPress={handleUpdatePhotoPress}*/}
-        <TouchableOpacity style={styles.updatePhotoButton} >
+        <TouchableOpacity style={styles.updatePhotoButton}>
           <Text style={styles.updatePhotoButtonText}>Actualizar Foto</Text>
         </TouchableOpacity>
       </View>
+
+      {/* Footer Component */}
+      <FooterComponent />
     </View>
   );
 };
@@ -141,7 +125,7 @@ const styles = {
   content: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'stretch', // Cambiado de 'center' a 'stretch'
+    alignItems: 'stretch',
     paddingHorizontal: 16,
   },
   profileImage: {
@@ -173,26 +157,34 @@ const styles = {
   },
   rateItem: {
     marginBottom: 10,
+    borderRadius: 10,
+
   },
-  followButton: {
+  button: {
+    backgroundColor: '#E53C3C',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  buttonText: {
+    fontSize: 16,
+    color:'white',
+  },
+  updatePhotoButton: {
     backgroundColor: 'blue',
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,
   },
-  followButtonText: {
+  updatePhotoButtonText: {
     color: 'white',
     fontSize: 16,
   },
-  unfollowButton: {
-    backgroundColor: 'red',
-    padding: 10,
+  albumCover: {
+    width: 100,
+    height: 100,
     borderRadius: 5,
-    marginBottom: 10,
-  },
-  unfollowButtonText: {
-    color: 'white',
-    fontSize: 16,
+    marginVertical: 5,
   },
 };
 

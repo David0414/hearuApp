@@ -2,11 +2,13 @@
 import React, { useState } from "react";
 import { View, TouchableOpacity, Text, StyleSheet, Image } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 const FooterComponent = () => {
   const [selectedIcon, setSelectedIcon] = useState("home");
   const navigation = useNavigation();
+  const route = useRoute();
+
 
   const handleIconPress = (iconName) => {
     setSelectedIcon(iconName);
@@ -36,6 +38,13 @@ const FooterComponent = () => {
     }
   };
 
+  // Función para obtener el color de fondo según la pantalla actual
+  const getIconBackgroundColor = (iconName) => {
+    const currentScreen = route.name;
+    return selectedIcon === iconName ? "red" : "transparent";
+  };
+
+
   return (
     <View style={styles.footer}>
       <View style={styles.container}>
@@ -43,7 +52,7 @@ const FooterComponent = () => {
         <TouchableOpacity
           style={[
             styles.iconContainer,
-            selectedIcon === "home" && styles.selectedIcon,
+            { backgroundColor: getIconBackgroundColor("home") },
           ]}
           onPress={() => handleIconPress("home")}
         >
@@ -58,7 +67,7 @@ const FooterComponent = () => {
         <TouchableOpacity
           style={[
             styles.iconContainer,
-            selectedIcon === "search" && styles.selectedIcon,
+            { backgroundColor: getIconBackgroundColor("search") },
           ]}
           onPress={() => handleIconPress("search")}
         >
@@ -73,7 +82,7 @@ const FooterComponent = () => {
         <TouchableOpacity
           style={[
             styles.iconContainer,
-            selectedIcon === "heart" && styles.selectedIcon,
+            { backgroundColor: getIconBackgroundColor("heart") },
           ]}
           onPress={() => handleIconPress("heart")}
         >
@@ -90,7 +99,7 @@ const FooterComponent = () => {
         <TouchableOpacity
           style={[
             styles.iconContainer,
-            selectedIcon === "user" && styles.selectedIcon,
+            { backgroundColor: getIconBackgroundColor("user") },
           ]}
           onPress={() => handleIconPress("user")}
         >
@@ -107,7 +116,7 @@ const FooterComponent = () => {
         <TouchableOpacity
           style={[
             styles.iconContainer,
-            selectedIcon === "logOut" && styles.selectedIcon,
+            { backgroundColor: getIconBackgroundColor("logOut") },
           ]}
           onPress={() => handleIconPress("logOut")}
         >

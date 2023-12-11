@@ -18,8 +18,6 @@ const SongScreen = ({ route, navigation }) => {
         // Obtener token almacenado en AsyncStorage
         const token = await AsyncStorage.getItem('token');
 
-        console.log(`ESTE ES EL PATH ${BASE_URL}/song/${song.idCancion}`);
-
         // Realizar solicitud a la API para obtener detalles adicionales
         const response = await axios.get(`${BASE_URL}/song/${song.idCancion}`, {
           headers: {
@@ -37,6 +35,21 @@ const SongScreen = ({ route, navigation }) => {
     fetchSongDetails();
   }, [song.idCancion]);
 
+  // Función para manejar la calificación de la canción
+  const handleRateSong = () => {
+    // Verificar si hay detalles de la canción antes de navegar
+    if (songDetails && songDetails.song && songDetails.song.length > 0) {
+      navigation.navigate('RatingScreen', {
+        idCancion: songDetails.song[0].idCancion,
+        nombreCancion: songDetails.song[0].nombreCancion,
+        imagen: songDetails.song[0].portadaAlbum,
+      });
+    } else {
+      // Manejar el caso en el que no se obtienen detalles de la canción
+      Alert.alert('Error', 'No se pudieron obtener los detalles de la canción. Inténtalo de nuevo.');
+    }
+  };
+
   // Estructura básica de la pantalla
   return (
     <View style={styles.container}>
@@ -50,8 +63,6 @@ const SongScreen = ({ route, navigation }) => {
 
       {/* Contenido de la pantalla */}
       <View style={styles.content}>
-
-
         {/* Detalles de la canción */}
         {songDetails && songDetails.song && songDetails.song.length > 0 && (
           <>
@@ -67,7 +78,7 @@ const SongScreen = ({ route, navigation }) => {
                 <Text style={styles.ratingText}>Puntuación Promedio:</Text>
                 <AirbnbRating
                   count={5}
-                  defaultRating={songDetails.song[0].promedioScore}  // Puntuación promedio
+                  defaultRating={songDetails.song[0].promedioScore}
                   size={20}
                   showRating={false}
                   isDisabled
@@ -75,9 +86,12 @@ const SongScreen = ({ route, navigation }) => {
               </View>
             )}
 
+            {/* Botón para calificar la canción */}
+            <TouchableOpacity style={styles.rateButton} onPress={handleRateSong}>
+              <Text style={styles.rateButtonText}>Calificar Canción</Text>
+            </TouchableOpacity>
           </>
         )}
-        {/* Agrega más detalles según tus necesidades */}
       </View>
     </View>
   );
@@ -129,7 +143,26 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
   },
-  // Agrega más estilos según sea necesario
+  ratingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  ratingText: {
+    color: 'white',
+    marginRight: 10,
+  },
+  rateButton: {
+    backgroundColor: '#E53C3C',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    marginTop: 10,
+  },
+  rateButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
 });
 
 export default SongScreen;
