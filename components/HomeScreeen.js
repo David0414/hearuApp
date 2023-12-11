@@ -121,7 +121,7 @@ const HomeScreen = ({ navigation }) => {
         </View>
 
         {/* Top Rated songs  seccion*/}
-        <View style={styles.bannerContainer}>
+        <View style={styles.trending}>
           <View style={styles.centerContainer}>
             <ScrollView
               style={{ width: '100%' }}  // Añade este estilo
@@ -220,6 +220,16 @@ const styles = StyleSheet.create({
     padding: 20,
     marginBottom: 100, // Agrega un margen inferior para dejar espacio al footer
 
+  },
+
+  trending:{
+    
+      alignItems: 'center',
+      marginBottom: 10,
+      backgroundColor: "#E53C3C", // Fondo rojo oscuro
+      borderRadius: 20,
+      overflow: "visible",
+      margin: 15,
   },
 
 

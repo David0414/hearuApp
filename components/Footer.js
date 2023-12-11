@@ -20,7 +20,7 @@ const FooterComponent = () => {
         navigation.navigate("SearchScreen");
         break;
       case "heart":
-        navigation.navigate("Feed"); // Cambiado de "Likes" a "Feed"
+        navigation.navigate("FeedScreen"); // Cambiado de "Likes" a "Feed"
         break;
       case "user":
         navigation.navigate('ProfileScreen');
@@ -79,10 +79,10 @@ const FooterComponent = () => {
         >
           <View>
             <Image
-              source={require('../assets/icons/hogar.png')} // Ruta de la imagen PNG
+              source={require('../assets/icons/amigos.png')} // Ruta de la imagen PNG
               style={styles.iconImage}
             />
-            <Text style={styles.iconText}>Feed</Text>
+            <Text style={styles.iconText}>Amigos</Text>
           </View>
         </TouchableOpacity>
 
@@ -138,6 +138,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     borderRadius: 20,
+    alignItems: "center",  // Agregado para centrar verticalmente
+
   },
   iconContainer: {
     alignItems: "center",

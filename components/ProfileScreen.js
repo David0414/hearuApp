@@ -147,7 +147,8 @@ const styles = {
   content: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'stretch', // Cambiado de 'center' a 'stretch'
+    paddingHorizontal: 16,
   },
   profileImage: {
     width: 100,
