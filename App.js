@@ -12,9 +12,10 @@ import ProfileScreen from './components/ProfileScreen';
 import OtherUserProfileScreen from './components/OtherUserProfileScreen';
 import ArtistScreen from './components/ArtistScreen';
 import FeedScreen from './components/FeedScreen';
+import SongScreen from './components/SongScreen';
+import AlbumScreen from './components/AlbumScreen';
 
 import UpdatePhotoProfileScreen from './components/UpdatePhotoProfileScreen';
-import SongScreen from './components/SongScreen';
 
 const Stack = createStackNavigator();
 
@@ -33,6 +34,8 @@ const App = () => {
         <Stack.Screen name="SongScreen" component={SongScreen} options={{ headerShown: false }} />
         <Stack.Screen name="UpdatePhotoProfileScreen" component={UpdatePhotoProfileScreen} options={{ headerShown: false }} />
         <Stack.Screen name="FeedScreen" component={FeedScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="AlbumScreen" component={AlbumScreen} options={{ headerShown: false }} />
+
 
       </Stack.Navigator>
     </NavigationContainer>

@@ -48,17 +48,7 @@ const ProfileScreen = ({ route, navigation }) => {
     navigation.navigate('UpdatePhotoProfileScreen');
   };
 
-  const renderUpdatePhotoButton = () => {
-    if (isOwnProfile) {
-      return (
-        <TouchableOpacity onPress={handleUpdatePhotoPress} style={styles.updatePhotoButton}>
-          <Text style={styles.updatePhotoButtonText}>Actualizar Foto</Text>
-        </TouchableOpacity>
-      );
-    }
 
-    return null;
-  };
 
   if (!profileData) {
     return (
@@ -85,6 +75,10 @@ const ProfileScreen = ({ route, navigation }) => {
         <Text style={styles.userName}>Nombre de Usuario: {profileData.profile.nombreUsuario}</Text>
         <Text style={styles.followers}>Seguidores: {profileData.followers[0].followers}</Text>
         <Text style={styles.following}>Siguiendo: {profileData.following[0].following}</Text>
+
+        <TouchableOpacity onPress={handleUpdatePhotoPress} style={styles.button}>
+          <Text style={styles.buttonText}>Actualizar Foto</Text>
+        </TouchableOpacity>
 
         <Text style={styles.sectionTitle}>Publicaciones y Calificaciones:</Text>
         <FlatList

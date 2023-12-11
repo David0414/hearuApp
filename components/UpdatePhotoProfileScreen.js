@@ -6,11 +6,10 @@ import {
   TouchableOpacity,
   Image,
   Alert,
-  TextInput,
 } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ImagePicker from 'react-native-image-crop-picker'; // Importa la biblioteca
+import ImagePicker from 'react-native-image-crop-picker';
 
 import { BASE_URL } from '../api/client';
 
@@ -38,7 +37,6 @@ const UpdatePhotoProfileScreen = ({ navigation }) => {
     try {
       setLoading(true);
 
-      // Obtener nombre de usuario almacenado en AsyncStorage
       const userName = await AsyncStorage.getItem('nombreUsuario');
 
       const response = await axios.patch(
@@ -50,7 +48,6 @@ const UpdatePhotoProfileScreen = ({ navigation }) => {
 
       if (response.status === 200) {
         Alert.alert('¡Foto de perfil actualizada correctamente!');
-        // Puedes redirigir a la pantalla de perfil u otra pantalla después de la actualización
         navigation.navigate('ProfileScreen');
       } else {
         Alert.alert('Error al actualizar la foto de perfil');
@@ -66,30 +63,16 @@ const UpdatePhotoProfileScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.title}>Actualizar Foto de Perfil</Text>
 
-      <TouchableOpacity onPress={handleChoosePhoto}>
-        <View style={styles.profileImageContainer}>
-          {profilePic ? (
-            <Image
-              source={{ uri: profilePic }}
-              style={styles.profileImage}
-            />
-          ) : (
-            <Text style={styles.choosePhotoText}>Seleccionar Foto</Text>
-          )}
-        </View>
+      <TouchableOpacity
+        onPress={handleChoosePhoto}
+        style={[styles.button, styles.choosePhotoButton]}
+      >
+        <Text style={styles.buttonText}>Seleccionar Foto</Text>
       </TouchableOpacity>
 
-      <TextInput
-        style={styles.input}
-        placeholder="URL de la nueva foto de perfil"
-        onChangeText={(text) => setProfilePic(text)}
-        value={profilePic}
-        editable={false} // Ahora el campo es solo de lectura ya que la URL se obtiene de la imagen seleccionada
-      />
-
       <TouchableOpacity
-        style={styles.button}
         onPress={handleUpdateProfilePic}
+        style={styles.button}
         disabled={loading}
       >
         <Text style={styles.buttonText}>Actualizar Foto de Perfil</Text>
@@ -111,34 +94,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: 'white',
   },
-  profileImageContainer: {
-    alignItems: 'center',
-  },
-  profileImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    marginBottom: 20,
-  },
-  choosePhotoText: {
-    color: 'white',
-    fontSize: 16,
-    marginTop: 10,
-  },
-  input: {
-    width: '80%',
-    height: 50,
-    borderColor: 'gray',
-    borderWidth: 2,
-    borderRadius: 10,
-    marginBottom: 20,
-    paddingLeft: 10,
-    color: 'white',
-  },
   button: {
     backgroundColor: 'red',
     padding: 15,
     borderRadius: 10,
+    width: '80%',
+    marginBottom: 20,
+  },
+  choosePhotoButton: {
+    backgroundColor: 'red', // Puedes cambiar este color según tus necesidades
   },
   buttonText: {
     color: 'white',

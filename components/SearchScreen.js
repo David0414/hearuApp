@@ -127,7 +127,7 @@ const SearchScreen = ({ navigation }) => {
 
                             if (item.descripcion === 'cancion') {
                                 // Navegar a la pantalla de SongScreen
-                                navigation.navigate('SongScreen', { idCancion: item.id });
+                                navigation.navigate('SongScreen', { song: { idCancion: item.id } });
                             } else if (item.descripcion === 'usuario') {
                                 // Navegar a la pantalla de OtherUserProfileScreen
                                 navigation.navigate('OtherUserProfileScreen', { userName: item.nombre });
@@ -136,6 +136,11 @@ const SearchScreen = ({ navigation }) => {
                             else if (item.descripcion == 'artista') {
                                 //Navegar a ArtistScreen
                                 navigation.navigate('ArtistScreen', { idAutor: item.id });
+                            }
+
+                            else if (item.descripcion == 'album') {
+                                //Navegar a ArtistScreen
+                                navigation.navigate('AlbumScreen', { idAlbum: item.id });
                             }
 
 
