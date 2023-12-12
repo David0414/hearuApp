@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, FlatList } from 'react-native';
+import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import { BASE_URL } from '../api/client';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -42,6 +42,16 @@ const FeedScreen = ({ navigation }) => {
           size={20}
           isDisabled
         />
+
+
+        <TouchableOpacity
+          style={styles.commentButton}
+          onPress={() => navigation.navigate('PostScreen', { postId: item.idPublicacion })}
+        >
+          <Text style={styles.commentButtonText}>Ver que piensa</Text>
+        </TouchableOpacity>
+
+
       </View>
     </View>
   );
@@ -103,6 +113,16 @@ const styles = {
   score: {
     fontSize: 14,
     color: 'green',
+  },
+  commentButton: {
+    backgroundColor: '#E53C3C',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 8,
+  },
+  commentButtonText: {
+    color: 'white',
+    textAlign: 'center',
   },
 };
 

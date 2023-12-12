@@ -151,12 +151,8 @@ const SearchScreen = ({ navigation }) => {
                         <Text style={styles.searchResultText}>{decodeURIComponent(getItemDetails(item).title)}</Text>
                         <Text style={styles.searchResultSubtitle}>{getItemDetails(item).subtitle}</Text>
                         <Text style={styles.searchResultDescription}>{getItemDetails(item).description}</Text>
-                        {getItemDetails(item).photo && (
-                            <FastImage
-                                source={getItemDetails(item).photo}
-                                style={styles.searchResultPhoto}
-                            />
-                        )}
+
+
                     </TouchableOpacity>
                 )}
             />
@@ -198,6 +194,14 @@ const styles = StyleSheet.create({
     searchResultText: {
         color: 'black', // Cambia el color del texto a negro
     },
+
+    searchResultPhoto: {
+        width: 100,
+        height: 100,
+        borderRadius: 5,
+    },
+
+
 
 });
 

@@ -23,7 +23,7 @@ const UpdatePhotoProfileScreen = ({ navigation }) => {
     const getTokenAndProfilePic = async () => {
       try {
         // Obtener el token de acceso
-        const storedToken = await AsyncStorage.getItem('accessToken');
+        const storedToken = await AsyncStorage.getItem('token');
         console.log('Token de acceso:', storedToken);
 
         // Actualizar el estado con el token
@@ -55,22 +55,7 @@ const UpdatePhotoProfileScreen = ({ navigation }) => {
     }
   };
 
-  const handleTakePhoto = async () => {
-    try {
-      const image = await ImagePicker.openCamera({
-        width: 300,
-        height: 400,
-        cropping: true,
-      });
-
-      if (!image.cancelled) {
-        setSelectedImage(image);
-        console.log('Dirección de la imagen:', image.path);
-      }
-    } catch (error) {
-      console.log('Error al tomar la foto:', error);
-    }
-  };
+  
 
   const handleUpdateProfilePic = async () => {
     try {
@@ -122,12 +107,7 @@ const UpdatePhotoProfileScreen = ({ navigation }) => {
         <Text style={styles.buttonText}>Seleccionar Foto</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity
-        onPress={handleTakePhoto}
-        style={[styles.button, styles.takePhotoButton]}
-      >
-        <Text style={styles.buttonText}>Tomar Foto</Text>
-      </TouchableOpacity>
+      
 
       <TouchableOpacity
         onPress={handleUpdateProfilePic}

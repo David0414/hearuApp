@@ -1,7 +1,6 @@
 // FooterComponent.js
 import React, { useState } from "react";
 import { View, TouchableOpacity, Text, StyleSheet, Image } from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 const FooterComponent = () => {
@@ -9,8 +8,7 @@ const FooterComponent = () => {
   const navigation = useNavigation();
   const route = useRoute();
 
-
-  const handleIconPress = (iconName) => {
+  const handleIconPress = async (iconName) => {
     setSelectedIcon(iconName);
 
     // Navegamos a la pantalla correspondiente
@@ -22,17 +20,14 @@ const FooterComponent = () => {
         navigation.navigate("SearchScreen");
         break;
       case "heart":
-        navigation.navigate("FeedScreen"); // Cambiado de "Likes" a "Feed"
+        navigation.navigate("FeedScreen");
         break;
       case "user":
         navigation.navigate('ProfileScreen');
         break;
-
       case "logOut":
         navigation.navigate("SignIn");
         break;
-
-
       default:
         break;
     }
@@ -41,9 +36,8 @@ const FooterComponent = () => {
   // Función para obtener el color de fondo según la pantalla actual
   const getIconBackgroundColor = (iconName) => {
     const currentScreen = route.name;
-    return selectedIcon === iconName ? "red" : "transparent";
+    return selectedIcon === iconName || currentScreen === iconName ? "red" : "transparent";
   };
-
 
   return (
     <View style={styles.footer}>
@@ -57,7 +51,7 @@ const FooterComponent = () => {
           onPress={() => handleIconPress("home")}
         >
           <Image
-            source={require('../assets/icons/hogar.png')} // Ruta de la imagen PNG
+            source={require('../assets/icons/hogar.png')}
             style={styles.iconImage}
           />
           <Text style={styles.iconText}>Home</Text>
@@ -72,7 +66,7 @@ const FooterComponent = () => {
           onPress={() => handleIconPress("search")}
         >
           <Image
-            source={require('../assets/icons/lupa.png')} // Ruta de la imagen PNG
+            source={require('../assets/icons/lupa.png')}
             style={styles.iconImage}
           />
           <Text style={styles.iconText}>Buscar</Text>
@@ -88,7 +82,7 @@ const FooterComponent = () => {
         >
           <View>
             <Image
-              source={require('../assets/icons/amigos.png')} // Ruta de la imagen PNG
+              source={require('../assets/icons/amigos.png')}
               style={styles.iconImage}
             />
             <Text style={styles.iconText}>Amigos</Text>
@@ -104,15 +98,13 @@ const FooterComponent = () => {
           onPress={() => handleIconPress("user")}
         >
           <Image
-            source={require('../assets/icons/usuario-de-perfil.png')} // Ruta de la imagen PNG
+            source={require('../assets/icons/usuario-de-perfil.png')}
             style={styles.iconImage}
           />
           <Text style={styles.iconText}>Perfil</Text>
         </TouchableOpacity>
 
-
-        {/*Icono de Log out*/}
-
+        {/* Icono de Log out */}
         <TouchableOpacity
           style={[
             styles.iconContainer,
@@ -121,17 +113,13 @@ const FooterComponent = () => {
           onPress={() => handleIconPress("logOut")}
         >
           <Image
-            source={require('../assets/icons/cerrar-sesion.png')} // Ruta de la imagen PNG
+            source={require('../assets/icons/cerrar-sesion.png')}
             style={styles.iconImage}
           />
           <Text style={styles.iconText}>Log Out</Text>
         </TouchableOpacity>
-
-
       </View>
-
     </View>
-
   );
 };
 
@@ -147,28 +135,19 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     borderRadius: 20,
-    alignItems: "center",  // Agregado para centrar verticalmente
-
+    alignItems: "center",
   },
   iconContainer: {
     alignItems: "center",
   },
-
   iconImage: {
-    width: 24, // ajusta el ancho según tus necesidades
-    height: 24, // ajusta la altura según tus necesidades
+    width: 24,
+    height: 24,
   },
-
   iconText: {
     marginTop: 5,
     color: "black",
   },
-  selectedIcon: {
-    backgroundColor: "red",
-    borderRadius: 10,
-    padding: 5,
-  },
-
   footer: {
     height: 50,
     backgroundColor: 'black',
@@ -183,8 +162,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 14,
   },
-
-
 });
 
 export default FooterComponent;

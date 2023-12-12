@@ -86,6 +86,7 @@ const HomeScreen = ({ navigation }) => {
           </Text>
           <Image
             source={require('../assets/imgs/artist/bbny.png')}
+            //source={{ uri: `asset:/imgs/artist/${bannerData.foto}` }}
             style={styles.bannerImage}
 
           />

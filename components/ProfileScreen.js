@@ -171,7 +171,7 @@ const styles = {
     color:'white',
   },
   updatePhotoButton: {
-    backgroundColor: 'blue',
+    backgroundColor: '#E53C3C',
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,

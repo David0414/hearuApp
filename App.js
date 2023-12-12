@@ -14,6 +14,9 @@ import ArtistScreen from './components/ArtistScreen';
 import FeedScreen from './components/FeedScreen';
 import SongScreen from './components/SongScreen';
 import AlbumScreen from './components/AlbumScreen';
+import PostScreen from './components/PostScreen';
+import CommentScreen from './components/CommentScreen';
+
 
 import UpdatePhotoProfileScreen from './components/UpdatePhotoProfileScreen';
 
@@ -35,6 +38,8 @@ const App = () => {
         <Stack.Screen name="UpdatePhotoProfileScreen" component={UpdatePhotoProfileScreen} options={{ headerShown: false }} />
         <Stack.Screen name="FeedScreen" component={FeedScreen} options={{ headerShown: false }} />
         <Stack.Screen name="AlbumScreen" component={AlbumScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="PostScreen" component={PostScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="CommentScreen" component={CommentScreen} options={{ headerShown: false }} />
 
 
       </Stack.Navigator>
