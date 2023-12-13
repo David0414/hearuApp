@@ -1,6 +1,6 @@
 # HearUApp
 
-![HearUApp Logo](https://drive.google.com/file/d/14i3QCnHUJOUoSpm6a4WQJtF0E7HYhYzu/view?usp=sharing)
+![HearUApp Logo](https://imgur.com/a/A3kesb7)
 
 Welcome to HearUApp, a revolutionary mobile application that transforms the music experience by connecting music enthusiasts through a comprehensive platform. Discover, share, and connect with your favorite tunes and artists like never before!
 
