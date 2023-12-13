@@ -25,9 +25,33 @@ To set up the frontend development environment, follow these steps:
 ```bash
 export ANDROID_HOME=C:\path\to\your\project
 
+Backend
+For backend development using Express.js:
+
+npm init
+npm install express --save
+
+Ensure you have Node.js installed on your system. Clone the HearUApp repository:
+
+git clone https://github.com/your-username/HearUApp.git
 
 
+Installation
+Navigate to the frontend and backend directories and install dependencies:
 
+cd HearUApp/frontend
+npm install
+
+cd HearUApp/backend
+npm install
+
+
+Configure your database and environment variables.
+
+Explore HearUApp
+Start the backend:
+
+```
 
 
 
