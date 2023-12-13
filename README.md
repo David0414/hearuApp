@@ -2,6 +2,16 @@
 
 ![HearUApp Logo](https://imgur.com/a/A3kesb7)
 
+
+# Contributors
+Abraham Raul Morelos Guerrero
+Diego Noe Castillo Santos
+David Mendoza Pérez
+
+
+# Acknowledgments
+Carlos Alberto Olmos, professor.
+
 Welcome to HearUApp, a revolutionary mobile application that transforms the music experience by connecting music enthusiasts through a comprehensive platform. Discover, share, and connect with your favorite tunes and artists like never before!
 
 
