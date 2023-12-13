@@ -4,8 +4,8 @@
 
 
 # Contributors
-Abraham Raul Morelos Guerrero
-Diego Noe Castillo Santos
+Abraham Raul Morelos Guerrero, 
+Diego Noe Castillo Santos, 
 David Mendoza Pérez
 
 
