@@ -1,4 +1,39 @@
+# HearUApp
+
+![HearUApp Logo](https://drive.google.com/file/d/14i3QCnHUJOUoSpm6a4WQJtF0E7HYhYzu/view?usp=sharing)
+
+Welcome to HearUApp, a revolutionary mobile application that transforms the music experience by connecting music enthusiasts through a comprehensive platform. Discover, share, and connect with your favorite tunes and artists like never before!
+
+
+
+## Introduction
+
+HearUApp is an innovative application developed by students from the Autonomous University of Querétaro. It brings music lovers together through a seamless platform built with React Native for the frontend and Express.js for the backend.
+
+## Development
+
+### Frontend
+
+To set up the frontend development environment, follow these steps:
+
+1. Install Node.js and JDK.
+2. Download and install Android Studio.
+3. Configure Android Studio with the necessary packages.
+4. Set the `ANDROID_HOME` environment variable.
+5. Open the project in your preferred text editor (e.g., Visual Studio Code).
+
+```bash
+export ANDROID_HOME=C:\path\to\your\project
+
+
+
+
+
+
+
+
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+
 
 # Getting Started
 
