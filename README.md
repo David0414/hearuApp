@@ -1,6 +1,6 @@
 # HearUApp
 
-![HearUApp Logo](https://imgur.com/a/A3kesb7)
+![HearUApp Logo](https://i.imgur.com/T9iAqUI.png)
 
 
 # Contributors
