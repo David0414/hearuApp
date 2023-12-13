@@ -1,3 +1,4 @@
+// OtherUserProfileScreen.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import axios from 'axios';
@@ -5,27 +6,44 @@ import { AirbnbRating } from 'react-native-ratings';
 import { BASE_URL } from '../api/client';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
+// Componente para la pantalla de perfil de otro usuario
+
 const OtherUserProfileScreen = ({ route, navigation }) => {
+
+  // Extraer el nombre de usuario del parámetro de la ruta
   const { userName } = route.params || {};
+
+  // Estados para datos de perfil, estado de seguir y actualización de la página
   const [profileData, setProfileData] = useState(null);
   const [isFollowing, setIsFollowing] = useState(false);
   const [refreshPage, setRefreshPage] = useState(false);
 
+  // Efecto para cargar los datos del perfil del usuario al montar la pantalla
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
+
+        // Obtener el token de AsyncStorage
         const token = await AsyncStorage.getItem('token');
 
+        // Obtener datos del perfil del usuario mediante una solicitud GET
         const response = await axios.get(`${BASE_URL}/profile/${userName}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
+        // Obtener el valor de seguir del perfil y actualizar el estado correspondiente
+
         const onfollowValue = response.data.message.onfollow[0].onfollow;
         setIsFollowing(onfollowValue === 1);
 
+        // Almacenar el estado de seguir en AsyncStorage
+
         await AsyncStorage.setItem('isFollowing', JSON.stringify(onfollowValue === 1));
+
+        // Establecer los datos del perfil en el estado
 
         setProfileData(response.data.message);
       } catch (error) {
@@ -33,15 +51,27 @@ const OtherUserProfileScreen = ({ route, navigation }) => {
       }
     };
 
+    // Llamar a la función para cargar datos del perfil
+
     fetchProfileData();
   }, [userName, refreshPage]);
 
+
+  // Maneja el botón de seguir/deseguir
+
   const handleFollowButton = async () => {
     try {
+
+      // Obtener el token de AsyncStorage
+
       const token = await AsyncStorage.getItem('token');
+
+      // Cambiar el estado de seguir
 
       const newIsFollowing = !isFollowing;
       setIsFollowing(newIsFollowing);
+
+      // Enviar solicitud POST o DELETE según el estado de seguir
 
       if (newIsFollowing) {
         await axios.post(`${BASE_URL}/profile/${userName}`, null, {
@@ -57,6 +87,8 @@ const OtherUserProfileScreen = ({ route, navigation }) => {
         });
       }
 
+      // Obtener el nuevo valor de seguir después de la actualización
+
       const onfollowResponse = await axios.get(`${BASE_URL}/profile/${userName}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -65,15 +97,24 @@ const OtherUserProfileScreen = ({ route, navigation }) => {
 
       const onfollowValue = onfollowResponse.data.message.onfollow[0].onfollow;
 
+      // Actualizar el estado de seguir
+
       setIsFollowing(onfollowValue === 1);
 
+      // Almacenar el nuevo estado de seguir en AsyncStorage
+
       await AsyncStorage.setItem('isFollowing', JSON.stringify(onfollowValue === 1));
+
+      // Forzar la actualización de la página para reflejar los cambios
 
       setRefreshPage((prevRefresh) => !prevRefresh);
     } catch (error) {
       console.error('Error toggling follow status:', error);
     }
   };
+
+
+  // Renderiza la interfaz de usuario de la pantalla de perfil de otro usuario
 
   return (
     <View style={styles.container}>
@@ -82,7 +123,8 @@ const OtherUserProfileScreen = ({ route, navigation }) => {
           <>
             <View style={styles.profileInfo}>
               <Image
-                source={{ uri: `asset:/imgs/profilePic/${profileData.profile.profilePic}` }}
+                source={require('../assets/imgs/profilePic/default.jpg')}
+                //source={{ uri: `asset:/imgs/profilePic/${profileData.profile.profilePic}` }}
                 style={styles.profileImage}
               />
               <Text style={styles.userName}>Nombre de Usuario: {profileData.profile.nombreUsuario}</Text>
@@ -126,6 +168,9 @@ const OtherUserProfileScreen = ({ route, navigation }) => {
     </View>
   );
 };
+
+
+// Estilos para la pantalla de perfil de otro usuario
 
 const styles = {
   container: {

@@ -1,3 +1,5 @@
+// PostScreen.js
+
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, FlatList, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import axios from 'axios';
@@ -5,21 +7,36 @@ import { BASE_URL } from '../api/client';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AirbnbRating } from 'react-native-ratings';
 
+
+// Pantalla de detalles de una publicación
+
 const PostScreen = ({ route }) => {
+    // Extraer el ID de la publicación de los parámetros de la ruta
+
     const { postId } = route.params;
+
+    // Estados para los datos de la publicación, comentarios y texto del comentario
+
     const [post, setPost] = useState(null);
     const [comments, setComments] = useState([]);
     const [commentText, setCommentText] = useState('');
 
+    // Función para obtener datos de la publicación y sus comentarios
+
     const fetchPostData = async () => {
         try {
+
+            // Obtener el token de AsyncStorage
+
             const token = await AsyncStorage.getItem('token');
+            // Obtener datos de la publicación mediante una solicitud GET
 
             const response = await axios.get(`${BASE_URL}/post/${postId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
+            // Establecer datos de la publicación y comentarios en los estados correspondientes
 
             setPost(response.data.message.post[0]);
             setComments(response.data.message.comments);
@@ -28,13 +45,22 @@ const PostScreen = ({ route }) => {
         }
     };
 
+    // Efecto para cargar los datos de la publicación al montar la pantalla
+
     useEffect(() => {
         fetchPostData();
     }, [postId]);
 
+
+    // Función para agregar un comentario
+
     const handleAddComment = async (refreshCallback) => {
         try {
+
+            // Obtener el token de AsyncStorage
+
             const token = await AsyncStorage.getItem('token');
+            // Enviar una solicitud POST para agregar un comentario
 
             const response = await axios.post(
                 `${BASE_URL}/post/${postId}`,
@@ -48,7 +74,11 @@ const PostScreen = ({ route }) => {
                 }
             );
 
+                        // Verificar si la solicitud fue exitosa
+
             if (response.status === 200) {
+                                // Actualizar la lista de comentarios con el nuevo comentario
+
                 setComments([...comments, response.data.message]);
                 setCommentText('');
 
@@ -64,6 +94,8 @@ const PostScreen = ({ route }) => {
             console.error('Error adding comment:', error);
         }
     };
+
+        // Renderiza la interfaz de usuario de la pantalla de detalles de la publicación
 
     return (
         <KeyboardAvoidingView

@@ -3,10 +3,19 @@ import React, { useState } from "react";
 import { View, TouchableOpacity, Text, StyleSheet, Image } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
+// Componente funcional para el pie de página de la aplicación
+
 const FooterComponent = () => {
+  // Estado para el icono seleccionado
+
   const [selectedIcon, setSelectedIcon] = useState("home");
+
+  // Hooks de navegación y ruta de la pantalla actual
+
   const navigation = useNavigation();
   const route = useRoute();
+
+  // Maneja el evento de presionar un icono y navega a la pantalla correspondiente
 
   const handleIconPress = async (iconName) => {
     setSelectedIcon(iconName);
@@ -38,6 +47,8 @@ const FooterComponent = () => {
     const currentScreen = route.name;
     return selectedIcon === iconName || currentScreen === iconName ? "red" : "transparent";
   };
+
+  // Renderiza el componente Footer
 
   return (
     <View style={styles.footer}>
@@ -123,6 +134,8 @@ const FooterComponent = () => {
   );
 };
 
+// Estilos para el componente Footer
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
@@ -163,5 +176,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 });
+
+
+// Exporta el componente FooterComponent para su uso en otros archivos
 
 export default FooterComponent;

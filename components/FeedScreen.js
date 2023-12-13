@@ -1,3 +1,5 @@
+// Importa las bibliotecas y componentes necesarios de React y React Native
+
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
 import axios from 'axios';
@@ -6,27 +8,37 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import FooterComponent from './Footer';
 import { AirbnbRating } from 'react-native-ratings';
 
+// Define el componente de la pantalla de Feed
 const FeedScreen = ({ navigation }) => {
+  // Estado para almacenar los datos del feed
   const [feedData, setFeedData] = useState([]);
 
+  // Efecto de carga para obtener los datos del feed al montar el componente
   useEffect(() => {
     const fetchFeedData = async () => {
       try {
+        // Obtiene el token de AsyncStorage
+
         const token = await AsyncStorage.getItem('token');
+        // Realiza una solicitud HTTP para obtener los datos del feed
 
         const response = await axios.get(`${BASE_URL}/feed`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
+        // Actualiza el estado con los datos del feed
+
         setFeedData(response.data.message);
       } catch (error) {
         console.error('Error fetching feed data:', error);
       }
     };
+    // Llama a la función de obtención de datos del feed
 
     fetchFeedData();
   }, []);
+  // Función de renderizado para un elemento de la lista de publicaciones en el feed
 
   const renderItem = ({ item }) => (
     <View style={styles.feedItem}>
@@ -56,6 +68,8 @@ const FeedScreen = ({ navigation }) => {
     </View>
   );
 
+  // Renderiza la interfaz de usuario de la pantalla de Feed
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -68,6 +82,8 @@ const FeedScreen = ({ navigation }) => {
     </View>
   );
 };
+
+// Estilos para la pantalla de Feed
 
 const styles = {
   container: {
@@ -125,5 +141,7 @@ const styles = {
     textAlign: 'center',
   },
 };
+
+// Exporta el componente FeedScreen para su uso en otros archivos
 
 export default FeedScreen;

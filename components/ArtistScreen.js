@@ -1,3 +1,6 @@
+// Importa las bibliotecas y componentes necesarios de React y React Native
+
+
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, FlatList, StyleSheet } from 'react-native';
 import axios from 'axios';
@@ -6,28 +9,46 @@ import { AirbnbRating } from 'react-native-ratings';
 
 import { BASE_URL } from '../api/client';
 
+
+// Define el componente de la pantalla del artista
+
 const ArtistScreen = ({ route }) => {
+    // Obtiene el ID del artista de las propiedades de la ruta
+
     const { idAutor } = route.params || {};
+    // Estado para almacenar los datos del artista
+
     const [artistData, setArtistData] = useState(null);
+    // Efecto de carga para obtener los datos del artista al montar el componente
 
     useEffect(() => {
         const fetchArtistData = async () => {
             try {
+                // Obtiene el token de AsyncStorage
+
                 const token = await AsyncStorage.getItem('token');
+                // Realiza una solicitud HTTP para obtener los datos del artista
 
                 const response = await axios.get(`${BASE_URL}/artist/${idAutor}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
+                // Actualiza el estado con los datos del artista
+
                 setArtistData(response.data.message);
             } catch (error) {
                 console.error('Error fetching artist data:', error);
             }
         };
+        // Llama a la función de obtención de datos del artista
+
 
         fetchArtistData();
     }, [idAutor]);
+
+
+    // Función de renderizado para un elemento de la lista de canciones
 
     const renderItem = ({ item }) => (
         <View style={[styles.rateItem, { backgroundColor: 'red' }]}>
@@ -44,6 +65,7 @@ const ArtistScreen = ({ route }) => {
             />
         </View>
     );
+    // Función de renderizado para un elemento de la lista de álbumes
 
     const renderItemAlbums = ({ item }) => (
         <View style={[styles.rateItem, { backgroundColor: 'red' }]}>
@@ -53,6 +75,7 @@ const ArtistScreen = ({ route }) => {
             <Image source={{ uri: `asset:/imgs/cover/${item.portada}` }} style={styles.profileImage} />
         </View>
     );
+    // Renderiza la interfaz de usuario de la pantalla del artista
 
     return (
         <View style={styles.container}>
@@ -94,6 +117,8 @@ const ArtistScreen = ({ route }) => {
     );
 };
 
+// Estilos para la pantalla del artista
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -133,5 +158,7 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
 });
+
+// Exporta el componente ArtistScreen para su uso en otros archivos
 
 export default ArtistScreen;

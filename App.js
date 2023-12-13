@@ -1,9 +1,12 @@
 // App.js
 import React from 'react';
+// Importa las dependencias necesarias de React Navigation
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import SignInScreen from './components/SignInScreen'; 
+// Importa los componentes de las distintas pantallas
+
+import SignInScreen from './components/SignInScreen';
 import HomeScreen from './components/HomeScreeen';
 import RegisterScreen from './components/RegisterScreen';
 import RatingScreen from './components/RatingScreen';
@@ -18,11 +21,17 @@ import PostScreen from './components/PostScreen';
 import CommentScreen from './components/CommentScreen';
 
 
+
 import UpdatePhotoProfileScreen from './components/UpdatePhotoProfileScreen';
+
+// Crea una pila de navegación utilizando createStackNavigator
 
 const Stack = createStackNavigator();
 
+// Definición del componente principal de la aplicación
 const App = () => {
+  // Contenedor de navegación principal
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="SignIn">
@@ -46,5 +55,7 @@ const App = () => {
     </NavigationContainer>
   );
 };
+
+// Exporta el componente principal para ser utilizado en otros archivos
 
 export default App;

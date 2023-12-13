@@ -53,7 +53,8 @@ const ProfileScreen = ({ route, navigation }) => {
 
       <View style={styles.content}>
         <Image
-          source={{ uri: `asset:/imgs/profilePic/${profileData.profile.profilePic}` }}
+          source={require('../assets/imgs/profilePic/default.jpg') }
+          //source={{ uri: `asset:/imgs/profilePic/${profileData.profile.profilePic}` }}
           style={styles.profileImage}
         />
         <Text style={styles.userName}>Nombre de Usuario: {profileData.profile.nombreUsuario}</Text>

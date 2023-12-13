@@ -203,6 +203,8 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 
+
+// Estilos
 const styles = StyleSheet.create({
 
   logoContainer: {

@@ -1,3 +1,5 @@
+// Importa las bibliotecas y componentes necesarios de React y React Native
+
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList } from "react-native";
 import { AirbnbRating } from "react-native-ratings";
@@ -5,27 +7,46 @@ import axios from 'axios';
 import { BASE_URL } from "../api/client";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
+// Define el componente de la pantalla de detalles del álbum
+
 const AlbumScreen = ({ route, navigation }) => {
+  // Obtiene el ID del álbum de las propiedades de la ruta
+
   const { idAlbum } = route.params || {};
+
+  // Estado para almacenar los detalles del álbum
+
   const [albumDetails, setAlbumDetails] = useState(null);
+
+  // Efecto de carga para obtener los detalles del álbum al montar el componente
 
   useEffect(() => {
     const fetchAlbumDetails = async () => {
       try {
+        // Obtiene el token de AsyncStorage
+
         const token = await AsyncStorage.getItem('token');
+        // Realiza una solicitud HTTP para obtener los detalles del álbum
+
         const response = await axios.get(`${BASE_URL}/album/${idAlbum}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
+
+        // Actualiza el estado con los detalles del álbum
+
         setAlbumDetails(response.data.message);
       } catch (error) {
         console.error('Error fetching album details:', error);
       }
     };
+    // Llama a la función de obtención de detalles del álbum
 
     fetchAlbumDetails();
   }, [idAlbum]);
+  // Renderiza la interfaz de usuario de la pantalla de detalles del álbum
 
   return (
     <View style={styles.container}>
@@ -85,6 +106,7 @@ const AlbumScreen = ({ route, navigation }) => {
     </View>
   );
 };
+// Estilos para la pantalla de detalles del álbum
 
 const styles = StyleSheet.create({
   container: {
@@ -173,5 +195,8 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
 });
+
+// Exporta el componente AlbumScreen para su uso en otros archivos
+
 
 export default AlbumScreen;

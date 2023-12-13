@@ -7,35 +7,29 @@ import {
   Image,
   Alert,
 } from 'react-native';
+import ImagePicker from 'react-native-image-crop-picker';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ImagePicker from 'react-native-image-crop-picker';
+import RNFS from 'react-native-fs';
 
 import { BASE_URL } from '../api/client';
 
 const UpdatePhotoProfileScreen = ({ navigation }) => {
-  const [profilePic, setProfilePic] = useState('');
   const [loading, setLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [token, setToken] = useState(null);
 
   useEffect(() => {
-    const getTokenAndProfilePic = async () => {
+    const getToken = async () => {
       try {
-        // Obtener el token de acceso
         const storedToken = await AsyncStorage.getItem('token');
-        console.log('Token de acceso:', storedToken);
-
-        // Actualizar el estado con el token
         setToken(storedToken);
-
-        // Puedes realizar otras lógicas relacionadas con la obtención de datos aquí
       } catch (error) {
         console.error('Error al obtener el token de acceso:', error);
       }
     };
 
-    getTokenAndProfilePic();
+    getToken();
   }, []);
 
   const handleChoosePhoto = async () => {
@@ -48,29 +42,27 @@ const UpdatePhotoProfileScreen = ({ navigation }) => {
 
       if (!image.cancelled) {
         setSelectedImage(image);
-        console.log('Dirección de la imagen:', image.path);
       }
     } catch (error) {
       console.log('Error al seleccionar la imagen:', error);
     }
   };
 
-  
-
   const handleUpdateProfilePic = async () => {
     try {
       setLoading(true);
 
       const userName = await AsyncStorage.getItem('nombreUsuario');
-      console.log('Token antes de la solicitud PATCH:', token);
+
+      const base64ImageData = await RNFS.readFile(selectedImage.path, 'base64');
+      const imageType = selectedImage.mime;
 
       const response = await axios.patch(
         `${BASE_URL}/profile/${userName}`,
-        {
-          profilePic,
-        },
+        { profilePic: `data:${imageType};base64,${base64ImageData}` },
         {
           headers: {
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
         }
@@ -107,8 +99,6 @@ const UpdatePhotoProfileScreen = ({ navigation }) => {
         <Text style={styles.buttonText}>Seleccionar Foto</Text>
       </TouchableOpacity>
 
-      
-
       <TouchableOpacity
         onPress={handleUpdateProfilePic}
         style={styles.button}
@@ -142,9 +132,6 @@ const styles = StyleSheet.create({
   },
   choosePhotoButton: {
     backgroundColor: '#E53C3C',
-  },
-  takePhotoButton: {
-    backgroundColor: '#3498db',
   },
   buttonText: {
     color: 'white',
